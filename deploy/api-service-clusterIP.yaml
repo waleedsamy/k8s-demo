@@ -1,0 +1,19 @@
+# service type is clusterIP
+kind: Service
+apiVersion: v1
+metadata:
+ name: api-service
+ labels:
+   name: api-service
+spec:
+ selector:
+   name: api
+   tier: backend
+   environment: dev
+ type: ClusterIP
+ ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    # container exposed port
+    targetPort: 8080

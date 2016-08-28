@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cosmo
+spec:
+  rules:
+  - host: cosmo
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api-service
+          servicePort: 80
+  - host: cosmo.traffics.de
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api-service
+          servicePort: 8080

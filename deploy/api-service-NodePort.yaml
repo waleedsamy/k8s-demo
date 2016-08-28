@@ -1,0 +1,21 @@
+# service type is NodePort
+kind: Service
+apiVersion: v1
+metadata:
+ name: api-service
+ labels:
+   name: api-service
+spec:
+ selector:
+   name: api
+   tier: backend
+   environment: dev
+ type: NodePort
+ ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    # container exposed port
+    targetPort: 80
+    # you don't have to set nodePort, k8s will assign one randomly for your service
+    # nodePort: 30808

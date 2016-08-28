@@ -1,0 +1,22 @@
+# service type is LoadBalancer
+kind: Service
+apiVersion: v1
+metadata:
+ name: api-service
+ labels:
+   name: api-service
+spec:
+ selector:
+   name: api
+   tier: backend
+   environment: dev
+ type: LoadBalancer
+ ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    # container exposed port
+    targetPort: 8080
+    # you don't have to assign nodePort manually. but it fails because this machine do n't have a public ip, which make getting external-ip in pending state, abd I think this is prevent k8s for procedding in getting nodePort for you
+    # so make nodePort manually in LoadBalancer service, until you have a public ip or running on GCE
+    nodePort: 30808
