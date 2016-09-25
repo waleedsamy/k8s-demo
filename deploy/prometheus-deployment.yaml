@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: quay.io/coreos/prometheus:0.19.2
+        image: prom/prometheus
         args:
           - '-storage.local.retention=6h'
           - '-storage.local.memory-chunks=500000'

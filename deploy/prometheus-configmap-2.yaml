@@ -7,12 +7,6 @@ data:
     global:
       scrape_interval: 15s
     scrape_configs:
-    # etcd is living outside of our cluster and we configure
-    # it directly.
-    - job_name: 'etcd'
-      target_groups:
-      - targets:
-        - 172.17.4.51:2379
     - job_name: 'kubernetes_components'
       kubernetes_sd_configs:
       - api_servers:
