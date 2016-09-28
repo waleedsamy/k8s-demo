@@ -26,4 +26,4 @@ spec:
           image: waleedsamy/hello-world-expressjs-docker
           ports:
           - name: web
-            containerPort: 80
+            containerPort: 8080

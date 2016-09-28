@@ -14,8 +14,8 @@ spec:
  ports:
   - name: http
     protocol: TCP
-    port: 80
+    port: 8080
     # container exposed port
-    targetPort: 80
+    targetPort: 8080
     # you don't have to set nodePort, k8s will assign one randomly for your service
     # nodePort: 30808

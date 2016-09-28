@@ -3,7 +3,7 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
 
 ### Run, show, scale and expose to public
 ```
-kubectl run api-deployment --image=waleedsamy/hello-world-expressjs-docker --replicas=2 --port=80
+kubectl run api-deployment --image=waleedsamy/hello-world-expressjs-docker --replicas=2 --port=8080
 kubectl get pods --show-labels
 kubectl scale --replicas=3 deployment/api-deployment
 kubectl expose deployment api-deployment --port=8080 --type=LoadBalancer --external-ip=172.17.4.101
