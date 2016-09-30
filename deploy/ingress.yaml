@@ -1,21 +1,52 @@
----
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: v1
+kind: ReplicationController
 metadata:
-  name: cosmo
+  name: traefik-ingress-controller
+  namespace: infra
+  labels:
+    k8s-app: traefik-ingress-lb
+    name: traefik-ingress-controller
+  annotations:
+    scheduler.alpha.kubernetes.io/affinity: >
+      {
+        "nodeAffinity": {
+          "requiredDuringSchedulingRequiredDuringExecution": {
+            "nodeSelectorTerms": [
+              {
+                "matchExpressions": [
+                  {
+                    "key": "role",
+                    "operator": "In",
+                    "values": ["ingress"]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
 spec:
-  rules:
-  - host: cosmo
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: api-service
-          servicePort: 80
-  - host: cosmo.traffics.de
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: api-service
-          servicePort: 8080
+  replicas: 1
+  selector:
+    k8s-app: traefik-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik
+        name: traefik-ingress-lb
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          hostPort: 80
+        - containerPort: 443
+          hostPort: 443
+        - containerPort: 8080
+        args:
+        - --web
+        - --kubernetes
+        - --logLevel=DEBUG

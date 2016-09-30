@@ -3,28 +3,17 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
 
 ### Run, show, scale and expose to public
 ```
-kubectl run api-deployment --image=waleedsamy/hello-world-expressjs-docker --replicas=2 --port=8080
-kubectl get pods --show-labels
-kubectl scale --replicas=3 deployment/api-deployment
-kubectl expose deployment api-deployment --port=8080 --type=LoadBalancer --external-ip=172.17.4.101
+ kubectl create namespace infra
+ kubectl create namespace green-dev
+ kubectl create -f ./deploy/ingress.yaml
+ kubectl create -f ./deploy/fluentd-daemonSet.yaml
+ kubectl create -f ./deploy/hello.yaml
 ```
 
 ### View your cluster
 ```bash
 # run weavescope on k8s, check Utils for port forwarding to be able to access from your browser
 kubectl create -f 'https://cloud.weave.works/launch/k8s/weavescope.yaml' --validate=false
-```
-
-
-### Ingress
-```bash
-# pick one of the next reverse proxies, I prefer traefik!
-kubectl create -f https://raw.githubusercontent.com/kubernetes/contrib/master/ingress/controllers/nginx-alpha/rc.yaml
-kubectl create -f https://raw.githubusercontent.com/containous/traefik/master/examples/k8s.rc.yaml
-
-# allow rule HOST:80 -> ingress:80
-sudo iptables -t nat -A  DOCKER -p tcp --dport 80 -j DNAT --to-destination 10.2.24.18:80
-
 ```
 
 #### Utils

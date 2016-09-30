@@ -1,0 +1,63 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+ name: helloservice
+ namespace: green-dev
+ labels:
+   name: hello
+spec:
+ selector:
+   tier: backend
+   name: helloservice
+ type: ClusterIP
+ ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: hello
+  namespace: green-dev
+  labels:
+    name: hello
+spec:
+  rules:
+  - host: dev.hello.traffics.de
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: helloservice
+          servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: hello
+ namespace: green-dev
+ labels:
+  name: hello
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: hello
+      namespace: green-dev
+      labels:
+        tier: backend
+        lang: nodejs
+        name: helloservice
+    spec:
+      containers:
+        - name: hello
+          image: waleedsamy/hello-world-expressjs-docker
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+          - name: web
+            containerPort: 8080
