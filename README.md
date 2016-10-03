@@ -2,12 +2,16 @@
 Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagrant and Ansible](https://github.com/waleedsamy/k8s-ubuntu)
 
 ### Run, show, scale and expose to public
-```
+```bash
  kubectl create namespace infra
  kubectl create namespace green-dev
+ kubectl label node 10.9.8.51 role=ingress
  kubectl create -f ./deploy/ingress.yaml
  kubectl create -f ./deploy/fluentd-daemonSet.yaml
  kubectl create -f ./deploy/hello.yaml
+ # elasticsearch
+ kubectl create  -f ./deploy/es.yaml
+ kubectl create  -f ./deploy/kibana.yaml
 ```
 
 ### View your cluster
@@ -29,7 +33,7 @@ $ nslookup kubernetes
 kubectl run -i --tty bind-tools --image=lherrera/bind-tools --restart=Never -- sh; kubectl delete po bind-tools
 $ host -t A kubernetes
 # run curl
-kubectl run -i --tty curl --image=radial/busyboxplus:curl; kubectl delete deployments curl
+kubectl run -i --tty curl --image=radial/busyboxplus:curl
 # port forward to pod, you now can access it as if it is running in your machine, usually use it if I need to access service in my browser
 kubectl port-forward {pod} 4040
 # select pod name

@@ -1,4 +1,20 @@
 apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-service
+  namespace: infra
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb
+    name: traefik-ingress-lb
+  type: NodePort
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: traefik-ingress-controller

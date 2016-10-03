@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fluentd
+  namespace: infra
   labels:
     name: fluentd
 spec:
@@ -23,9 +24,11 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: fluentd
+  namespace: infra
 spec:
   template:
     metadata:
+      namespace: infra
       labels:
         app: fluentd
         tier: backend
@@ -38,6 +41,10 @@ spec:
           env:
             - name: FLUENTD_OPT
               value: -q
+            - name: ELASTICSEARCH_HOST
+              value: "elasticsearch.infra.svc.cluster.local"
+            - name: ELASTICSEARCH_PORT
+              value: "9200"
           ports:
             - name: forward
               containerPort: 24284
