@@ -5,8 +5,9 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
 ```bash
  kubectl create namespace infra
  kubectl create namespace green-dev
- kubectl label node 10.9.8.51 role=ingress
+ kubectl label node 172.9.8.51 role=ingress
  kubectl create -f ./deploy/ingress.yaml
+ kubectl create  -f ./deploy/prometheus.yaml
  kubectl create -f ./deploy/fluentd-daemonSet.yaml
  kubectl create -f ./deploy/hello.yaml
  # elasticsearch
@@ -38,6 +39,12 @@ kubectl run -i --tty curl --image=radial/busyboxplus:curl
 kubectl port-forward {pod} 4040
 # select pod name
 kubectl get pod --selector=weavescope-component=weavescope-app -o jsonpath='{.items..metadata.name}'
+# forward port to prometheus pod
+kubectl --namespace=infra get pods -l app=prometheus -o name | \
+	sed 's/^.*\///' | \
+	xargs -I{} kubectl --namespace=infra port-forward {} 9090:9090
+# access kubernetes from a pod using default serviceaccount
+curl --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt  -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" https://kubernetes.default.svc.cluster.local
 ```
 
 ```bash
