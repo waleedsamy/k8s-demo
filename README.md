@@ -9,6 +9,7 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
  kubectl create -f ./deploy/ingress.yaml
  kubectl create  -f ./deploy/prometheus.yaml
  kubectl create  -f ./deploy/prometheus-node-exporter.yaml
+ kubectl create  -f ./deploy/grafana.yaml
  kubectl create -f ./deploy/fluentd-daemonSet.yaml
  kubectl create -f ./deploy/hello.yaml
  # elasticsearch
