@@ -99,7 +99,6 @@ data:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
     - job_name: 'kubernetes-service-endpoints'
-      scheme: http
       kubernetes_sd_configs:
       - api_servers:
         - 'https://kubernetes.default'
@@ -184,3 +183,44 @@ data:
       - source_labels: [__meta_kubernetes_pod_name]
         action: replace
         target_label: kubernetes_pod_name
+    - job_name: kubernetes-nodes-cadvisor
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kubernetes_sd_configs:
+        - api_servers:
+            - https://kubernetes.default
+          in_cluster: true
+          role: node
+      relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - source_labels: [__meta_kubernetes_role]
+          action: replace
+          target_label: kubernetes_role
+      metric_relabel_configs:
+        - source_labels: [id]
+          action: replace
+          regex: '^/machine\.slice/machine-rkt\\x2d([^\\]+)\\.+/([^/]+)\.service$'
+          target_label: rkt_container_name
+          replacement: '${2}-${1}'
+        - source_labels: [id]
+          action: replace
+          regex: '^/system\.slice/(.+)\.service$'
+          target_label: systemd_service_name
+          replacement: '${1}'
+    - job_name: kubernetes-apiserver-cadvisor
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kubernetes_sd_configs:
+        - api_servers:
+            - https://kubernetes.default
+          in_cluster: true
+          role: apiserver
+      relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - source_labels: [__meta_kubernetes_role]
+          action: replace
+          target_label: kubernetes_role
