@@ -8,6 +8,7 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
  kubectl label node 172.9.8.51 role=ingress
  kubectl create -f ./deploy/ingress.yaml
  kubectl create  -f ./deploy/prometheus.yaml
+ kubectl create  -f ./deploy/prometheus-node-exporter.yaml
  kubectl create -f ./deploy/fluentd-daemonSet.yaml
  kubectl create -f ./deploy/hello.yaml
  # elasticsearch
