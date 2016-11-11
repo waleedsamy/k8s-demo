@@ -9,17 +9,16 @@ spec:
   selector:
     name: fluentd
     tier: backend
-  type: NodePort
+  type: ClusterIP
+  clusterIP: None
   ports:
     - name: forward
       protocol: TCP
-      port: 24284
-      targetPort: 24284
+      port: 24224
     - name: prometheus
       protocol: TCP
       port: 24231
-      targetPort: 24231
-----
+---
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -30,7 +29,7 @@ spec:
     metadata:
       namespace: infra
       labels:
-        app: fluentd
+        name: fluentd
         tier: backend
       name: fluentd
     spec:
@@ -47,9 +46,11 @@ spec:
               value: "9200"
           ports:
             - name: forward
-              containerPort: 24284
+              containerPort: 24224
+              hostPort: 24224
             - name: prometheus
               containerPort: 24231
+              hostPort: 24231
           volumeMounts:
             - name: varlog
               mountPath: /var/log
