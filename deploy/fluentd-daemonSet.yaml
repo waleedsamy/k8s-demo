@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: fluentd
-          image: waleedsamy/k8s-fluentd-nodejs-winston:v2.0
+          image: waleedsamy/k8s-fluentd-nodejs-winston:v2.1
           imagePullPolicy: Always
           env:
             - name: FLUENTD_OPT
@@ -48,6 +48,8 @@ spec:
               value: "https://hooks.slack.com/services/XXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXX"
             - name: SLACK_CHANNEL
               value: "production_log_errors"
+            - name: KIBANA_HOST
+              value: "http://kibana.internal.domain.com"
           ports:
             - name: forward
               containerPort: 24224
