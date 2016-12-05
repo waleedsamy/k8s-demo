@@ -10,6 +10,7 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
  kubectl create  -f ./deploy/prometheus.yaml
  kubectl create  -f ./deploy/prometheus-node-exporter.yaml
  kubectl create  -f ./deploy/grafana.yaml
+ # Need to configure env SLACK_WEBHOOK_URL and SLACK_CHANNEL otherwise use waleedsamy/k8s-fluentd-nodejs-winston:v1.0 instead
  kubectl create -f ./deploy/fluentd-daemonSet.yaml
  kubectl create -f ./deploy/hello.yaml
  # elasticsearch

@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: fluentd
-          image: waleedsamy/k8s-fluentd-nodejs-winston
+          image: waleedsamy/k8s-fluentd-nodejs-winston:v2.0
           imagePullPolicy: Always
           env:
             - name: FLUENTD_OPT
@@ -44,6 +44,10 @@ spec:
               value: "elasticsearch.infra.svc.cluster.local"
             - name: ELASTICSEARCH_PORT
               value: "9200"
+            - name: SLACK_WEBHOOK_URL
+              value: "https://hooks.slack.com/services/XXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXX"
+            - name: SLACK_CHANNEL
+              value: "production_log_errors"
           ports:
             - name: forward
               containerPort: 24224
