@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: fluentd
-          image: waleedsamy/k8s-fluentd-nodejs-winston:v2.1
+          image: waleedsamy/k8s-fluentd-nodejs-winston:v2.2
           imagePullPolicy: Always
           env:
             - name: FLUENTD_OPT

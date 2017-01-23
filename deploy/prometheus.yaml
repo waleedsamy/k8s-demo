@@ -30,7 +30,7 @@ spec:
         app: prometheus
     spec:
       containers:
-      - image: quay.io/prometheus/prometheus:v1.0.1
+      - image: quay.io/prometheus/prometheus:v1.5.0
         name: prometheus
         command:
         - "/bin/prometheus"

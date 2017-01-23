@@ -1,5 +1,5 @@
 # k8s-demo
-Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagrant and Ansible](https://github.com/waleedsamy/k8s-ubuntu)
+Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagrant and Ansible](https://github.com/waleedsamy/k8s-ubuntu) or use [kubeadm](https://kubernetes.io/docs/getting-started-guides/kubeadm/)
 
 ### Run, show, scale and expose to public
 ```bash

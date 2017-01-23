@@ -33,7 +33,7 @@ metadata:
     name: kibana
 spec:
   rules:
-  - host: kibana.traffics.de
+  - host: kibana.internal.domain.com
     http:
       paths:
       - path: /
@@ -64,8 +64,10 @@ spec:
       serviceAccount: elk
       containers:
       - name: kibana
-        image: quay.io/pires/docker-kibana:4.1.1
+        image: kibana:4.1.11
         env:
+        - name: ELASTICSEARCH_URL
+          value: "http://elasticsearch.infra.svc.cluster.local:9200"
         - name: KIBANA_ES_URL
           value: "http://elasticsearch.infra.svc.cluster.local:9200"
         - name: KUBERNETES_TRUST_CERT

@@ -58,6 +58,10 @@ spec:
           env:
             - name: NODE_ENV
               value: development
+            - name: DOCKER_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           ports:
           - name: web
             containerPort: 8080

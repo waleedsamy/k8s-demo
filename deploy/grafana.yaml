@@ -20,7 +20,7 @@ metadata:
     name: grafana
 spec:
   rules:
-  - host: grafana.traffics.de
+  - host: grafana.internal.domain.com
     http:
       paths:
       - path: /

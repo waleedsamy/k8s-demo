@@ -52,6 +52,7 @@ spec:
         name: traefik-ingress-lb
     spec:
       terminationGracePeriodSeconds: 60
+      hostNetwork: true
       containers:
       - image: traefik
         name: traefik-ingress-lb
