@@ -9,6 +9,7 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
  kubectl create -f ./deploy/ingress.yaml
  # for more details about exposed metrics [check](https://github.com/kubernetes/kube-state-metrics#metrics)
  kubectl create -f ./deploy/kube-state-metrics.yaml
+ # prometheus configuration is based on official [sample](https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml)
  kubectl create  -f ./deploy/prometheus.yaml
  kubectl create  -f ./deploy/prometheus-node-exporter.yaml
  kubectl create  -f ./deploy/grafana.yaml
@@ -59,6 +60,14 @@ docker run -d --net=green --net-alias web nginx:alpine
 docker run --rm --net green lherrera/bind-tools host -t A web
 docker run --rm --net green lherrera/bind-tools ping web
 ```
+
+
+#### Notes:
+  * kubernetes service should has `prometheus.io/probe` with value of true to be scraped
+  * kubernetes pod scraping is configured by:
+    * `prometheus.io/scrape`: Only scrape pods that have a value of `true`
+    * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
+    * `prometheus.io/port`: Scrape the pod on the indicated port instead of the default of `9102`.
 
 * resources:
  * http://blog.oestrich.org/2016/01/nodeport-kubernetes-load-balancer/
