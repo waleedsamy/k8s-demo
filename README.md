@@ -7,6 +7,8 @@ Hit kubernetes, to bootstrap kubernetes you can check [k8s on ubuntu with Vagran
  kubectl create namespace green-dev
  kubectl label node 172.9.8.51 role=ingress
  kubectl create -f ./deploy/ingress.yaml
+ # for more details about exposed metrics [check](https://github.com/kubernetes/kube-state-metrics#metrics)
+ kubectl create -f ./deploy/kube-state-metrics.yaml
  kubectl create  -f ./deploy/prometheus.yaml
  kubectl create  -f ./deploy/prometheus-node-exporter.yaml
  kubectl create  -f ./deploy/grafana.yaml
