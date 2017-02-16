@@ -47,6 +47,5 @@ spec:
         args:
         - --web
         - --kubernetes
-        - --logLevel=DEBUG
       nodeSelector:
         role: ingress
